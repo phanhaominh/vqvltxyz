@@ -1318,6 +1318,13 @@ var racr = {
 
       racr.params.waitingNextLevel = true;
 
+      racr.params.keyLeft = false;
+      racr.params.keyRight = false;
+      racr.params.keyFaster = false;
+      racr.params.keySlower = false;
+      racr.params.steerAmount = 0;
+
+
       TweenLite.to($("html, body"), .5, {
         scrollTop: racr.racer.offset().top,
         onComplete: function() {
@@ -1371,6 +1378,11 @@ var racr = {
       racr.params.position = 0;
       racr.params.playerZ = 0;
       racr.params.playerX = 0;
+      racr.params.keyLeft = false;
+      racr.params.keyRight = false;
+      racr.params.keyFaster = false;
+      racr.params.keySlower = false;
+      racr.params.steerAmount = 0;
       racr.params.boostIncrease = 0;
       racr.params.secondsLeft = racr.params.maxRoundDurate;
       racr.reset({ segmentLength: racr.params.segmentLength });
@@ -1614,9 +1626,57 @@ var racr = {
       sound.hover.play();
     });
     $(window).on('keydown', function(e) {
-      if (e.keyCode === 13 && $('#main-menu').is(':visible') && !racr.params.begin) {
+      if (e.keyCode === 13 && !racr.params.begin && !racr.params.beginAnimation) {
         e.preventDefault();
-        $('#select-team-btn').click();
+        if ($('#main-menu').is(':visible')) {
+          $('#select-team-btn').click();
+        } else if ($('#team-selection').is(':visible')) {
+          racr.startClick();
+        }
+      }
+    });
+    var menuFocus = 'team'; // 'mode' or 'team'
+    var modeIndex = 0;
+    var teamIndex = 2; // KA-RaceIng is default
+
+    $(window).on('keydown', function(e) {
+      if (!$('#team-selection').is(':visible') || racr.params.begin) return;
+      
+      if (e.keyCode === 38) { // Up
+        e.preventDefault();
+        menuFocus = 'mode';
+        $('.team-option').removeClass('selected');
+        $('.mode-option').removeClass('selected').eq(modeIndex).addClass('selected');
+      }
+      if (e.keyCode === 40) { // Down
+        e.preventDefault();
+        menuFocus = 'team';
+        $('.mode-option').removeClass('selected');
+        $('.team-option').removeClass('selected').eq(teamIndex).addClass('selected');
+      }
+      if (e.keyCode === 37) { // Left
+        e.preventDefault();
+        if (menuFocus === 'mode') {
+          modeIndex = (modeIndex - 1 + 2) % 2;
+          $('.mode-option').removeClass('selected').eq(modeIndex).addClass('selected').trigger('click');
+        } else {
+          teamIndex = (teamIndex - 1 + 5) % 5;
+          $('.team-option').removeClass('selected').eq(teamIndex).addClass('selected');
+          racr.params.playerCar = $('.team-option').eq(teamIndex).data('team');
+          sound.hover.play();
+        }
+      }
+      if (e.keyCode === 39) { // Right
+        e.preventDefault();
+        if (menuFocus === 'mode') {
+          modeIndex = (modeIndex + 1) % 2;
+          $('.mode-option').removeClass('selected').eq(modeIndex).addClass('selected').trigger('click');
+        } else {
+          teamIndex = (teamIndex + 1) % 5;
+          $('.team-option').removeClass('selected').eq(teamIndex).addClass('selected');
+          racr.params.playerCar = $('.team-option').eq(teamIndex).data('team');
+          sound.hover.play();
+        }
       }
     });
 
