@@ -949,18 +949,17 @@ var Render = {
     var carSet = racr.playerCars[racr.params.playerCar];
     if (!carSet) carSet = racr.playerCars['KARACEING'];
     
-    if (steer < 0) {
-      carImage = steerAmount >= 2 ? carSet.farleft : carSet.left;
-    } else if (steer > 0) {
-      carImage = steerAmount >= 2 ? carSet.farright : carSet.right;
-    } else if (curve < -3) {
-      carImage = carSet.farleft;
-    } else if (curve > 3) {
-      carImage = carSet.farright;
+    if (racr.params.controlMode === 'sim') {
+      if (steerAmount < 0) { carImage = steerAmount <= -2 ? carSet.farleft : carSet.left; }
+      else if (steerAmount > 0) { carImage = steerAmount >= 2 ? carSet.farright : carSet.right; }
+      else { carImage = carSet.straight; }
     } else {
-      carImage = carSet.straight;
-    }
-    
+      if (steer < 0) { carImage = steerAmount >= 2 ? carSet.farleft : carSet.left; }
+      else if (steer > 0) { carImage = steerAmount >= 2 ? carSet.farright : carSet.right; }
+      else if (curve < -3) { carImage = carSet.farleft; }
+      else if (curve > 3) { carImage = carSet.farright; }
+      else { carImage = carSet.straight; }
+    }    
     if (!carImage) return;
     
     var PLAYER_BASE_HEIGHT = 240;
@@ -1205,6 +1204,9 @@ var racr = {
     width: 1024,                    // logical canvas width
     height: 768,                     // logical canvas height
     centrifugal: 0,                       // centrifugal force multiplier when going around curves
+    controlMode: 'arcade',               // 'arcade' or 'sim'
+    simCentrifugal: 0.3,                 // mild drift on curves in sim mode
+    arcadeCentrifugal: 0,                // no drift in arcade mode    
     skySpeed: 0.015,                   // background sky layer scroll speed when going around curve (or up hill)
     hillSpeed: 0.0007,                   // background hill layer scroll speed when going around curve (or up hill)
     treeSpeed: 0.0005,                   // background tree layer scroll speed when going around curve (or up hill)
@@ -1509,48 +1511,37 @@ var racr = {
 
     $(window).on("keydown", function (e) {
       if (racr.params.begin) {
-        if (e.keyCode === 37 || e.keyCode == 65) { // B
-          e.stopPropagation();
-          // e.preventDefault();
-          racr.goTo('L');
-        }
-        if (e.keyCode === 38 || e.keyCode == 83 || e.keyCode == 87) { // N
-          e.stopPropagation();
-          // e.preventDefault();
-          racr.goTo('U');
-        }
-        if (e.keyCode === 39 || e.keyCode == 68) { // M
-          e.stopPropagation();
-          // e.preventDefault();
-          racr.goTo('R');
-        }
-        if (e.keyCode === 32) { // M
-          e.stopPropagation();
-          // e.preventDefault();
-          racr.goTo('N');
+        if (racr.params.controlMode === 'sim') {
+          if (e.keyCode === 37 || e.keyCode === 65) { e.stopPropagation(); e.preventDefault(); racr.params.keyLeft = true; }
+          if (e.keyCode === 39 || e.keyCode === 68) { e.stopPropagation(); e.preventDefault(); racr.params.keyRight = true; }
+          if (e.keyCode === 38 || e.keyCode === 87) { e.stopPropagation(); e.preventDefault(); racr.params.keyFaster = true; }
+          if (e.keyCode === 40 || e.keyCode === 83) { e.stopPropagation(); e.preventDefault(); racr.params.keySlower = true; }
+          if (e.keyCode === 32) { e.stopPropagation(); e.preventDefault(); racr.params.keySlower = true; }
+        } else {
+          if (e.keyCode === 37 || e.keyCode == 65) { e.stopPropagation(); racr.goTo('L'); }
+          if (e.keyCode === 38 || e.keyCode == 83 || e.keyCode == 87) { e.stopPropagation(); racr.goTo('U'); }
+          if (e.keyCode === 39 || e.keyCode == 68) { e.stopPropagation(); racr.goTo('R'); }
+          if (e.keyCode === 32) { e.stopPropagation(); racr.goTo('N'); }
         }
       } else {
         var keyDom = $("[data-keycode=" + e.keyCode + "]");
-        if (keyDom.length) {
-          keyDom.addClass('highlight');
-          setTimeout(function() {
-            keyDom.removeClass('highlight');
-          }, 10);
-        }
+        if (keyDom.length) { keyDom.addClass('highlight'); setTimeout(function() { keyDom.removeClass('highlight'); }, 10); }
       }
-      if (e.keyCode === 16) { // Left Shift
-        racr.activateNitrous();
-      }
-      if (e.keyCode === 32) { // Space only
-        racr.params.keySlower = true;
-      }
+      if (e.keyCode === 16) { racr.activateNitrous(); }
+      if (e.keyCode === 32) { racr.params.keySlower = true; }
+      if (e.keyCode === 67) { e.stopPropagation(); e.preventDefault(); racr.toggleControlMode(); }
     });
     $(window).on("keyup", function (e) {
-      if (e.keyCode === 32) { // Space only
-        racr.params.keySlower = false;
+      if (racr.params.controlMode === 'sim') {
+        if (e.keyCode === 37 || e.keyCode === 65) { e.stopPropagation(); e.preventDefault(); racr.params.keyLeft = false; }
+        if (e.keyCode === 39 || e.keyCode === 68) { e.stopPropagation(); e.preventDefault(); racr.params.keyRight = false; }
+        if (e.keyCode === 38 || e.keyCode === 87) { e.stopPropagation(); e.preventDefault(); racr.params.keyFaster = false; }
+        if (e.keyCode === 40 || e.keyCode === 83) { e.stopPropagation(); e.preventDefault(); racr.params.keySlower = false; }
+        if (e.keyCode === 32) { e.stopPropagation(); e.preventDefault(); racr.params.keySlower = false; }
+      } else {
+        if (e.keyCode === 32) { racr.params.keySlower = false; }
       }
     });
-
     var last = Date.now(), now = 0;
     racr.canvas.on("click", function (e) {
       if (!racr.params.begin && !racr.params.beginAnimation) {
@@ -1995,15 +1986,18 @@ var racr = {
 
       racr.params.position = Util.increase(racr.params.position, dt * racr.params.speed, racr.params.trackLength, true);
 
-      if (racr.params.keyLeft) {
-        racr.params.keyFaster = true;
-        racr.params.playerX = racr.params.playerX - dx;
-      } else if (racr.params.keyRight) {
-        racr.params.keyFaster = true;
-        racr.params.playerX = racr.params.playerX + dx;
+      if (racr.params.controlMode === 'sim') {
+        if (racr.params.keyLeft) { racr.params.playerX = racr.params.playerX - dx; }
+        if (racr.params.keyRight) { racr.params.playerX = racr.params.playerX + dx; }
+        racr.params.playerX = racr.params.playerX - (dx * speedPercent * playerSegment.curve * racr.params.centrifugal);
+        if (racr.params.keyLeft && !racr.params.keyRight) { racr.params.steerAmount = -2; }
+        else if (racr.params.keyRight && !racr.params.keyLeft) { racr.params.steerAmount = 2; }
+        else { racr.params.steerAmount = 0; }
+      } else {
+        if (racr.params.keyLeft) { racr.params.keyFaster = true; racr.params.playerX = racr.params.playerX - dx; }
+        else if (racr.params.keyRight) { racr.params.keyFaster = true; racr.params.playerX = racr.params.playerX + dx; }
+        racr.params.playerX = racr.params.playerX - (dx * speedPercent * playerSegment.curve * racr.params.centrifugal);
       }
-      racr.params.playerX = racr.params.playerX - (dx * speedPercent * playerSegment.curve * racr.params.centrifugal);
-
       if (racr.params.keySlower) {
         racr.params.speed = Util.accelerate(racr.params.speed, racr.params.breaking, dt);
         if (racr.params.speed < 50) racr.params.speed = 0; // instant stop if very slow
@@ -2101,7 +2095,12 @@ var racr = {
         }
       }
 
-      racr.params.playerX = Util.limit(racr.params.playerX, -3, 3);     // dont ever let it go too far out of bounds
+      if (racr.params.controlMode === 'sim') {
+        racr.params.playerX = Util.limit(racr.params.playerX, -2.5, 2.5);
+      } else {
+        racr.params.playerX = Util.limit(racr.params.playerX, -3, 3);
+      }
+
       if (racr.params.nitro > 0) {
         if (racr.params.nitro%30==0)
           racr.tripExplode(racr.params.width / 2, racr.params.height - racr.params.playerH / 1.5);
@@ -3207,7 +3206,7 @@ var racr = {
               }
               racr.params.gameStart = true;
               $('#nos-mobile-btn').removeClass('hidden');
-              racr.goTo('U');
+              if (racr.params.controlMode === 'arcade') { racr.goTo('U'); }
               if (racr.params.currentLapTime < 1) {
                 // Game.playMusic();
               }
@@ -3231,6 +3230,10 @@ var racr = {
     var obj = {};
     var query = window.location.search.substring(1);
     var vars = query.split("&");
+    if (racr.queryParams.mode === 'sim') {
+      racr.params.controlMode = 'sim';
+      racr.params.centrifugal = racr.params.simCentrifugal;
+    }
     for (var i = 0; i < vars.length; i++) {
       var pair = vars[i].split("=");
       obj[pair[0]] = decodeURIComponent(pair[1]);
@@ -3267,6 +3270,49 @@ var racr = {
 
     if ((racr.segments.length === 0) || (options.segmentLength) || (options.rumbleLength))
       racr.resetRoad(); // only rebuild road when necessary
+  },
+
+  toggleControlMode: function() {
+    if (racr.params.controlMode === 'arcade') {
+      racr.params.controlMode = 'sim';
+      racr.params.centrifugal = racr.params.simCentrifugal;
+      if (racr.params._laneTween) { racr.params._laneTween.kill(); }
+      racr.params.playerX = 0;
+      racr.params.steerAmount = 0;
+      racr.params.steerLeft = false;
+      racr.params.steerRight = false;
+      racr.params.keyFaster = false;
+      racr.params.keySlower = false;
+      racr.params.keyLeft = false;
+      racr.params.keyRight = false;
+      racr.showModeIndicator('SIM');
+    } else {
+      racr.params.controlMode = 'arcade';
+      racr.params.centrifugal = racr.params.arcadeCentrifugal;
+      if (racr.params._laneTween) { racr.params._laneTween.kill(); }
+      racr.params.playerX = 0;
+      racr.params.steerAmount = 0;
+      racr.params.steerLeft = false;
+      racr.params.steerRight = false;
+      racr.params.keyFaster = false;
+      racr.params.keySlower = false;
+      racr.params.keyLeft = false;
+      racr.params.keyRight = false;
+      racr.showModeIndicator('ARCADE');
+    }
+  },
+
+  showModeIndicator: function(mode) {
+    var indicator = document.getElementById('mode-indicator');
+    if (!indicator) {
+      indicator = document.createElement('div');
+      indicator.id = 'mode-indicator';
+      indicator.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);color:white;font-size:48px;font-family:Arial,sans-serif;font-weight:bold;text-shadow:0 0 20px rgba(0,173,239,0.8);pointer-events:none;z-index:9999;opacity:0;transition:opacity 0.3s;';
+      document.body.appendChild(indicator);
+    }
+    indicator.textContent = mode;
+    indicator.style.opacity = '1';
+    setTimeout(function() { indicator.style.opacity = '0'; }, 1500);
   },
   
   activateNitrous: function() {
