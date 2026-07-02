@@ -1990,9 +1990,15 @@ var racr = {
         if (racr.params.keyLeft) { racr.params.playerX = racr.params.playerX - dx; }
         if (racr.params.keyRight) { racr.params.playerX = racr.params.playerX + dx; }
         racr.params.playerX = racr.params.playerX - (dx * speedPercent * playerSegment.curve * racr.params.centrifugal);
-        if (racr.params.keyLeft && !racr.params.keyRight) { racr.params.steerAmount = -2; }
-        else if (racr.params.keyRight && !racr.params.keyLeft) { racr.params.steerAmount = 2; }
-        else { racr.params.steerAmount = 0; }
+        // Gradual steerAmount ramp for smooth sprite transitions
+        if (racr.params.keyLeft && !racr.params.keyRight) {
+          racr.params.steerAmount = Math.max(-2, racr.params.steerAmount - dt * 10);
+        } else if (racr.params.keyRight && !racr.params.keyLeft) {
+          racr.params.steerAmount = Math.min(2, racr.params.steerAmount + dt * 10);
+        } else {
+          if (racr.params.steerAmount > 0) { racr.params.steerAmount = Math.max(0, racr.params.steerAmount - dt * 10); }
+          else if (racr.params.steerAmount < 0) { racr.params.steerAmount = Math.min(0, racr.params.steerAmount + dt * 10); }
+        }
       } else {
         if (racr.params.keyLeft) { racr.params.keyFaster = true; racr.params.playerX = racr.params.playerX - dx; }
         else if (racr.params.keyRight) { racr.params.keyFaster = true; racr.params.playerX = racr.params.playerX + dx; }
