@@ -170,6 +170,28 @@
   display: block;
   text-align: center;
 }
+.mode-option, .game-mode-option {
+  cursor: pointer;
+  padding: 10px 24px;
+  border: 3px solid transparent;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.7);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.7em;
+  color: #aaa;
+  transition: all 0.2s;
+}
+.mode-option:hover, .game-mode-option:hover {
+  border-color: #F5C400;
+  color: #fff;
+  transform: scale(1.1);
+
+}
+.mode-option.selected, .game-mode-option.selected {
+  border-color: #F5C400;
+  box-shadow: 0 0 16px rgba(245, 196, 0, 0.5);
+  color: #fff;
+}
 @media (max-width: 700px) {
   .team-options {
     gap: 8px;
@@ -209,7 +231,7 @@
             </div>
           </div>
           <div id="hud" class="hud pixel hideHud">
-            <div class="hud-bar">
+            <div class="hud-bar" style="position:relative;">
               <div class="hud-left">
                 <div>km/h</div>
                 <div id="speed_value" class="value">0</div>/<span id="max_speed">160</span>
@@ -223,6 +245,9 @@
                 <div id="lap_value" class="value">1</div>/3
               </div>
               <div class="clearfix"></div>
+              <div id="nitro-gauge" style="position:absolute; bottom:0; left:0; width:100%; height:3px; background:#222;">
+                <div id="nitro-fill" style="width:100%; height:100%; background:#F5C400; transition: width 0.2s;"></div>
+              </div>
             </div>
             <div id="current_lap_time" class="hud-center">
               <div class="highlight value" id="current_lap_time_highlight">10</div>
@@ -302,6 +327,14 @@
 
               <!-- TEAM SELECTION -->
               <div id="team-selection" style="display:none;">
+                <h3 style="font-family: 'Press Start 2P', monospace; color: #fff; text-align: center; margin-bottom: 20px; font-size: 1.2em;">CONTROL MODE</h3>
+                <div class="mode-options" style="display:flex; justify-content:center; gap:16px; margin-bottom:10px;">
+                  <div class="mode-option selected" data-mode="arcade">ARCADE</div>
+                  <div class="mode-option" data-mode="sim">SIM</div>
+                </div>
+                <p class="mode-desc" style="font-family:'Press Start 2P',monospace; font-size:0.45em; color:#F5C400; text-align:center; margin-top:8px; margin-bottom:30px;">
+                  Auto-steer • Lane snap • Space to brake
+                </p>
                 <h3 style="font-family: 'Press Start 2P', monospace; color: #fff; text-align: center; margin-bottom: 20px; font-size: 1.2em;">CHOOSE YOUR TEAM</h3>
                 <div class="team-options">
                   <div class="team-option" data-team="TUM">

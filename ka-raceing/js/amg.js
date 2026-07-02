@@ -363,6 +363,26 @@ function playSong() {
 
 var soundLoaded = 0;
 var sound = {
+    ev_accel: new Howl({
+      src: [assetPath + 'accel.wav'],
+      html5: true,
+      volume: 0,
+      onload: function() { soundLoaded++; }
+    }),
+    ev_decel: new Howl({
+      src: [assetPath + 'decel.wav'],
+      html5: true,
+      volume: 0,
+      onload: function() { soundLoaded++; }
+    }),
+    ev_loop: new Howl({
+      src: [assetPath + 'loop.wav'],
+      html5: true,
+      loop: true,
+      volume: 0,
+      onload: function() { soundLoaded++; }
+    }),
+
     overtake: new Howl({
     src: [assetPath + 'overtake.wav'],
     volume: 0.3,
@@ -950,8 +970,8 @@ var Render = {
     if (!carSet) carSet = racr.playerCars['KARACEING'];
     
     if (racr.params.controlMode === 'sim') {
-      if (steerAmount < 0) { carImage = steerAmount <= -2 ? carSet.farleft : carSet.left; }
-      else if (steerAmount > 0) { carImage = steerAmount >= 2 ? carSet.farright : carSet.right; }
+      if (steerAmount < 0) { carImage = steerAmount <= -1.5 ? carSet.farleft : carSet.left; }
+      else if (steerAmount > 0) { carImage = steerAmount >= 1.5 ? carSet.farright : carSet.right; }
       else { carImage = carSet.straight; }
     } else {
       if (steer < 0) { carImage = steerAmount >= 2 ? carSet.farleft : carSet.left; }
@@ -1291,12 +1311,9 @@ var racr = {
       racr.dom.ampel.outer.addClass("view");
 
           // Start engine with crossfade system
-      if (sound.engine && sound.engine.eng) {
-        for (var i = 0; i < 8; i++) {
-          sound.engine.eng[i].play();
-          if (sound.engine.exh[i]) sound.engine.exh[i].play();
-        }
-        sound.engine.playing = true;
+      if (sound.ev_loop) {
+        sound.ev_loop.volume(0.1);
+        sound.ev_loop.play();
       }
 
       racr.params.waitingNextLevel = true;
@@ -1361,14 +1378,9 @@ var racr = {
       racr.params.beginAnimation = false;
       racr.params.gameStart = false;
           // Start engine for new lap
-      if (sound.engine && sound.engine.eng) {
-        for (var i = 0; i < 8; i++) {
-          if (!sound.engine.eng[i].playing()) {
-            sound.engine.eng[i].play();
-            if (sound.engine.exh[i]) sound.engine.exh[i].play();
-          }
-        }
-      }
+      if (sound.ev_loop) sound.ev_loop.stop();
+      if (sound.ev_accel) sound.ev_accel.stop();
+      if (sound.ev_decel) sound.ev_decel.stop();
       racr.updateHud('maxSpeed', 160);
       racr.params.keyFaster = false;
       racr.dom.ampel.lights.removeClass("on go");
@@ -1574,12 +1586,38 @@ var racr = {
       sound.hover.play();
     });
 
+    // Mode selection
+    $('.mode-option').on('click', function() {
+      sound.select.play();
+      $('.mode-option').removeClass('selected');
+      $(this).addClass('selected');
+      var mode = $(this).data('mode');
+      racr.params.controlMode = mode;
+      if (mode === 'sim') {
+        racr.params.centrifugal = racr.params.simCentrifugal;
+        $('.mode-desc').text('Manual gas/brake • Gradual steer • Drift');
+      } else {
+        racr.params.centrifugal = racr.params.arcadeCentrifugal;
+        $('.mode-desc').text('Auto-steer • Lane snap • Space to brake');
+      }
+    }).on('mouseenter', function() {
+      sound.hover.play();
+    });
+
         // Select team button
     $('#select-team-btn').on('click', function() {
       sound.select.play();
       $('#main-menu').fadeOut(300, function() {
         $('#team-selection').fadeIn(300);
       });
+    }).on('mouseenter', function() {
+      sound.hover.play();
+    });
+    $(window).on('keydown', function(e) {
+      if (e.keyCode === 13 && $('#main-menu').is(':visible') && !racr.params.begin) {
+        e.preventDefault();
+        $('#select-team-btn').click();
+      }
     });
 
     var imagesLoaded = 0;
@@ -1959,13 +1997,25 @@ var racr = {
         racr.updateHud('speed', 0);
 
         // Kill engine sound during countdown
-        if (sound.engine && sound.engine.eng) {
-          for (var i = 0; i < 8; i++) {
-            sound.engine.eng[i].volume(0);
-            if (sound.engine.exh[i]) sound.engine.exh[i].volume(0);
-          }
-        }
+        if (sound.ev_loop) sound.ev_loop.volume(0);
+        if (sound.ev_accel) sound.ev_accel.volume(0);
+        if (sound.ev_decel) sound.ev_decel.volume(0);
         return;
+      }      // Nitro gauge
+      if (racr.params.nitrousActive) {
+        var elapsedActive = Date.now() - racr.params.lastNitrousTime;
+        var fill = Math.max(0, 100 - (elapsedActive / 2500) * 100);
+        $('#nitro-fill').css({ 'width': fill + '%', 'background': '#00ADEF' });
+        $('#nitro-gauge').css('box-shadow', '0 0 8px #00ADEF');
+      } else if (racr.params.nitrousCooldown) {
+        var elapsed = Date.now() - racr.params.lastNitrousTime - 2500;
+        if (elapsed < 0) elapsed = 0;
+        var fill = Math.min(100, (elapsed / 5000) * 100);
+        $('#nitro-fill').css({ 'width': fill + '%', 'background': '#F5C400' });
+        $('#nitro-gauge').css('box-shadow', 'none');
+      } else {
+        $('#nitro-fill').css({ 'width': '100%', 'background': '#F5C400' });
+        $('#nitro-gauge').css('box-shadow', '0 0 4px #F5C400' );
       }
 
       // *** UPDATE RIVAL SYSTEM ***
@@ -1990,6 +2040,14 @@ var racr = {
         if (racr.params.keyLeft) { racr.params.playerX = racr.params.playerX - dx; }
         if (racr.params.keyRight) { racr.params.playerX = racr.params.playerX + dx; }
         racr.params.playerX = racr.params.playerX - (dx * speedPercent * playerSegment.curve * racr.params.centrifugal);
+        // Off-road deceleration
+        if ((racr.params.playerX < -1) || (racr.params.playerX > 1)) {
+          var offRoadLimit = racr.params.maxSpeed / 4;
+          var offRoadDecel = -racr.params.maxSpeed / 2;
+          if (racr.params.speed > offRoadLimit)
+            racr.params.speed = Util.accelerate(racr.params.speed, offRoadDecel, dt);
+        }
+
         // Gradual steerAmount ramp for smooth sprite transitions
         if (racr.params.keyLeft && !racr.params.keyRight) {
           racr.params.steerAmount = Math.max(-2, racr.params.steerAmount - dt * 10);
@@ -2036,7 +2094,7 @@ var racr = {
 
         // console.log(car);
         if (racr.params.speed > car.speed) {
-          if (Util.overlap(racr.params.playerX, playerW, car.offset, carW, 0.8)) {
+          if (Util.overlap(racr.params.playerX, playerW * 0.6, car.offset, carW * 0.6, 0.5)) {
             var playSound = true;
             if (racr.params.lastHitSound != 0) {
               var now = Date.now();
@@ -2146,28 +2204,36 @@ var racr = {
       }
 
       racr.updateHud('speed', Math.round(racr.params.speed / 100));
-      // Engine sound crossfade
-      var speedPercent = racr.params.speed / racr.params.maxSpeed;
-      var level = Math.min(7, Math.floor(speedPercent * 7)); // spreads across 0-7 more evenly
-      // Engine sound crossfade
-      // Engine sound crossfade - biased for arcade acceleration
-      if (sound.engine && sound.engine.eng) {
-        var speedPercent = Math.min(1, racr.params.speed / racr.params.maxSpeed);
-        var level = Math.floor(speedPercent * 5);
-        for (var i = 0; i < 8; i++) {
-          var targetVol = 0;
-          if (i === level) {
-            targetVol = 0.3;
-          } else if (i === level + 1 && level < 5) {
-            targetVol = 0.2;
-          } else if (i === level - 1 && level > 0) {
-            targetVol = 0.15;
-          }
-          sound.engine.eng[i].volume(targetVol);
-          if (sound.engine.exh[i]) sound.engine.exh[i].volume(targetVol * 0.8);
-        }
-      }
+      // EV Motor Sound
+      if (sound.ev_loop && sound.ev_accel && sound.ev_decel) {
+        var evSpeedPercent = Math.min(1, racr.params.speed / racr.params.maxSpeed);
+        var evVol = 0.1 + evSpeedPercent * 0.3;
+        var prevSpeed = racr.params._prevSpeed || 0;
+        var accelerating = racr.params.speed > prevSpeed + 20;
+        var decelerating = racr.params.speed < prevSpeed - 20;
 
+        if (accelerating && !sound.ev_accel.playing()) {
+          sound.ev_accel.volume(evVol);
+          sound.ev_accel.play();
+          sound.ev_decel.stop();
+          sound.ev_loop.stop();
+        } else if (decelerating && !sound.ev_decel.playing()) {
+          sound.ev_decel.volume(evVol);
+          sound.ev_decel.play();
+          sound.ev_accel.stop();
+          sound.ev_loop.stop();
+        } else if (!accelerating && !decelerating) {
+          if (!sound.ev_loop.playing()) {
+            sound.ev_loop.volume(evVol);
+            sound.ev_loop.play();
+          } else {
+            sound.ev_loop.volume(evVol);
+          }
+          sound.ev_accel.stop();
+          sound.ev_decel.stop();
+        }
+        racr.params._prevSpeed = racr.params.speed;
+      }
       racr.updateHud('currentLapTime', racr.formatTime(racr.params.currentLapTime));
 
       racr.updateStars(dt, playerSegment, playerW);
@@ -2175,14 +2241,6 @@ var racr = {
   finishGame: function () {
     $('#nos-mobile-btn').addClass('hidden');
     racr.params.gameOver = true;
-
-    if (sound.engine && sound.engine.eng) {
-      for (var i = 0; i < 8; i++) {
-        sound.engine.eng[i].stop();
-        if (sound.engine.exh[i]) sound.engine.exh[i].stop();
-      }
-      sound.engine.playing = false;
-    }
 
     if (sound.wind && sound.wind.length) {
       for (var i = 0; i < 4; i++) {
