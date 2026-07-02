@@ -1,0 +1,10 @@
+{
+  "name": "vqvltxyz",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "javascript-obfuscator src/ka-raceing/js/amg.js --output src/ka-raceing/js/amg.min.js --compact true --string-array true --string-array-encoding base64"
+  },
+  "devDependencies": {
+    "javascript-obfuscator": "^4.1.0"
+  }
+}

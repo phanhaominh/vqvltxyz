@@ -1,0 +1,93 @@
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    
+    <script async="" src="./terms_files/fbevents.js"></script><script async="" src="./terms_files/gtm.js"></script><script async="" src="./terms_files/js"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "UA-50920100-11");
+    </script>
+    <title>VQVLT</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <meta name="description" content="VQVLT">
+    <meta name="keywords" content="VQVLT">
+    <meta name="author" content="VQVLT">
+    <link rel="shortcut icon" type="image/png" href="vqvlt2.png">
+    <meta name="google-site-verification" content="UPXlhM6TpbXIphqwLtIpuMkTm1qxSFiXxZ1P1zoHn5k">
+    <link rel="stylesheet" href="./terms_files/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="./terms_files/video-js.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./global/main.min.css">
+    <script src="./terms_files/jquery.min.js"></script>
+    <script src="./terms_files/index.umd.min.js"></script>
+    <script src="./terms_files/three.min.js"></script>
+    <script async="" type="text/javascript" src="./terms_files/klaviyo.js"></script>
+    <!-- AWGE Scripts -->
+    <script src="./terms_files/definitions.min.js"></script>
+    <script src="./terms_files/assets.min.js"></script>
+    <script src="./terms_files/main.min.js"></script>
+    <!-- End AWGE Scripts -->
+  <body>
+    <div id="vqvlt-tube-border" class="vqvlt-tube-border"></div>
+    <div class="vqvlt-tube-shape">
+      <div id="vqvlt-content" class="vqvlt-content" style="animation: 3.4s linear 0s 1 normal none running turn-on;"><button id="vqvlt-home" class="vqvlt-home" onclick="newPage('home'); return false;">
+  <img src="./terms_files/vqvlt-home.gif" alt="Home button spinning globe">
+</button>
+<div class="vqvlt-stars"></div>
+<div class="vqvlt-space-container">
+  <div class="vqvlt-space-wrapper">
+    <h1 class="vqvlt-space-header">TERMS OF USE</h1>
+    <h4 class="vqvlt-space-text">
+      1. <b>No Ownership or Rights</b><br>
+      We do not own, claim, or assert any rights to the music or media available on this website. All content belongs to its respective artists, copyright holders, and creators.<br><br>
+      2. <b>For Archival and Educational Purposes Only</b><br>
+      The materials on this site are provided solely for archival, educational, and informational purposes. No content is to be used for commercial gain or redistribution.<br>
+    </h4>
+  </div>
+</div>
+<script>
+function newPage(page) {
+  const pageMap = {
+    home: 'home.html',
+    contact: 'contact.html',
+    about: 'about.html',
+    tools: 'tools.html',
+    vault: 'vault.html',
+    media: 'media.html',
+    lost: 'lost.html',
+    chug: 'chug.html',
+    c_video_list: 'c_video_list.html',
+    c_pic_list: 'c_pic_list.html',
+    c_carti_videos: 'c_carti_videos.html',
+    terms: 'terms.html',
+    // add more mappings as needed
+  };
+  const url = pageMap[page] || (page + '.html');
+  fetch(url)
+    .then(response => response.text())
+    .then(html => {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = html;
+      const newContent = tempDiv.querySelector('#vqvlt-content');
+      if (newContent) {
+        const currentContent = document.querySelector('#vqvlt-content');
+        currentContent.replaceWith(newContent);
+        const newUrl = '/' + page;
+        history.pushState({page: page}, '', newUrl);
+        if (page === 'vault') {
+          attachVaultLoginLogic();
+        }
+      }
+    });
+}
+window.addEventListener('popstate', function(event) {
+  if (event.state && event.state.page) {
+    newPage(event.state.page);
+  }
+});
+
+</script>
+</body></html>

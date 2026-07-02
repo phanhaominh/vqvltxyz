@@ -1,0 +1,229 @@
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>VQVLT</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <meta name="description" content="VQVLT">
+    <meta name="keywords" content="VQVLT">
+    <meta name="author" content="VQVLT">
+    <link rel="shortcut icon" type="image/png" href="vqvlt2.png">
+    <meta name="google-site-verification" content="UPXlhM6TpbXIphqwLtIpuMkTm1qxSFiXxZ1P1zoHn5k">
+    <link rel="stylesheet" href="./shared_assets/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="./home_files/video-js.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./global/main.min.css">
+    <script src="./home_files/jquery.min.js"></script>
+    <script src="./home_files/index.umd.min.js"></script>
+    <script src="./home_files/three.min.js"></script>
+    <script src="./home_files/definitions.min.js"></script>
+    <script src="./shared_assets/js/assets.min.js"></script>
+    <script src="./home_files/main.min.js"></script>
+</head>
+<body>
+    <div id="vqvlt-tube-border" class="vqvlt-tube-border"></div>
+    <div class="vqvlt-tube-shape">
+      <div id="vqvlt-content" class="vqvlt-content" style="animation: 3.4s linear 0s 1 normal none running turn-on;"><div class="home-content">
+  <div class="home-container">
+    <div class="home-video-container">
+      <div class="home-video-wrapper">
+        <div class="home-video-parent">
+          <button id="home-video-text" class="home-video-text" onclick="newPage('media'); return false;">MEDIA</button>
+          <img id="home-video-gif" class="home-video-gif" src="./home_files/vhs-camera.gif" alt="Media button Translucent spinning camera gif ">
+          <img src="./home_files/new-ingen.gif" class="home-video" width="10vh" height="10vh" alt="ingen" onclick="newPage('media'); return false;" style="cursor: pointer;">
+        </div>
+      </div>
+    </div>
+
+    <div class="home-navbar">
+      <img src="./home_files/vq-hitone.png" onclick="newPage('home'); return false;" style="height: 35px" alt="Home button VQVLT logo">
+    </div>
+    <div class="home-options-container">
+      <div class="home-options">
+        <div class="home-options-row">
+          <div class="home-options-item">
+            <button id="forums-button" class="home-options-wrapper forums-button" onclick="window.open('https://t.me/vqvlt', '_blank')">
+              <img class="home-options-icon" src="./home_files/vqvltForum.gif" alt="Telegram button Profile spinning icon">
+              <h3 class="home-options-text home-options-text-forum">TELEGRAM</h3>
+            </button>
+          </div>
+          <div class="home-options-item">
+            <button id="home-vqvltDVD" class="home-options-wrapper" onclick="window.location.href = 'game/game.html';">
+              <img class="home-options-icon" style="transform: scale(1.5)" src="./home_files/vq-dvd-2.gif" alt="VQVLT DVD button VQVLT DVD spinning icon">
+              <h3 class="home-options-text home-options-text-black">GAME</h3>
+            </button>
+          </div>
+          <div style="flex: 1"></div>
+          <div style="flex: 1"></div>
+        </div>
+        <div class="home-options-row">
+          <div class="home-options-item">
+            <div class="home-options-btn-content">
+              <button id="shop-button-desktop" class="home-options-wrapper shop-button" onclick="window.location.href='vault.html';">
+                <img style="transform: scale(1.2) translateY(0)" class="home-options-icon" src="./home_files/FLOPPY.gif" alt="Shop button spinning icon">
+                <h3 class="home-options-text home-options-text-green">VAULT</h3>
+              </button>
+            </div>
+          </div>
+          <div class="home-options-item">
+            <div class="home-options-btn-content">
+              <button id="testing-button" class="home-options-wrapper rallyrace-button" onclick="window.open('https://github.com/00vqla', '_blank')">
+                <img style="transform: scale(1.2) translateY(0)" class="home-options-icon" src="./home_files/GitHub-logo.gif" alt="GITHUB PAGE">
+                <h3 class="home-options-text home-options-text-black github-align-fix">GITHUB</h3>
+              </button>
+            </div>
+          </div>
+          <div class="home-options-item">
+            <div class="home-options-btn-content">
+              <button id="about-button" class="home-options-wrapper about-button" onclick="newPage('about'); return false;">
+                <img style="transform: scale(1.2) translateY(0)" class="home-options-icon" src="./home_files/about.gif" alt="About">
+                <h3 class="home-options-text home-options-text-red">ABOUT</h3>
+              </button>
+            </div>
+          </div>
+          <div class="home-options-item">
+            <div class="home-options-btn-content">
+              <button id="contact-button" class="home-options-wrapper contact-button" onclick="newPage('contact'); return false;">
+                <img style="transform: scale(1.2) translateY(0)" class="home-options-icon" src="./home_files/vault.gif" alt="About button Spinning pager icon">
+                <h3 class="home-options-text home-options-text-green">
+                  CONTACT
+                </h3>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vqvlt-copyright">
+      <h4 class="vqvlt-copyright-text" style="text-align: center;">
+        ©&nbsp;&nbsp;2026&nbsp;&nbsp;VQVLT
+        <br>
+        <span class="vqvlt-tc vqvlt-terms"><button onclick="newPage('terms'); return false;">Terms and Conditions</button></span>
+      </h4>
+    </div>
+  </div>
+</div>
+<div class="home-content-mobile">
+  <div class="home-navbar home-navbar-mobile">
+    <img src="./home_files/vq-hitone.png" onclick="newPage('home'); return false;" alt="Home button VQVLT logo">
+  </div>
+  <div class="home-container-mobile">
+    <div class="home-section-video-mobile">
+      <img class="home-video-ipad-mobile" src="./home_files/ipad.svg" alt="">
+      <button id="home-video-wrapper-mobile" class="home-video-wrapper-mobile" onclick="newPage('media'); return false;">
+        <h1 id="home-video-text" class="home-video-text">MEDIA</h1>
+        <img src="./home_files/new-ingen.gif" class="home-video-gif-mobile" alt="Random gif" style="cursor: pointer;">
+      </button>
+    </div>
+    <div class="home-section-button-mobile">
+      <div class="home-section-button-row-mobile">
+        <button id="shop-button-mobile" class="home-options-wrapper shop-button" onclick="window.location.href='vault.html';">
+          <img class="home-options-icon" src="./home_files/FLOPPY.gif" alt="Shop button spinning icon">
+          <h3 class="home-options-text home-options-text-green">VAULT</h3>
+        </button>
+      </div>
+      <div class="home-section-button-row-mobile">
+        <button id="testing-button" class="home-options-wrapper rallyrace-button" onclick="window.open('https://github.com/00vqla', '_blank')">
+          <img class="home-options-icon" src="./home_files/GitHub-logo.gif" alt="GITHUB PAGE">
+          <h3 class="home-options-text home-options-text-black github-align-fix">GITHUB</h3>
+        </button>
+      </div>
+      <div class="home-section-button-row-mobile">
+        <button id="pictures-button" class="home-options-wrapper pictures-button" onclick="window.location.href = 'game/game.html';">
+          <img class="home-options-icon home-options-icon-image" src="./home_files/vq-dvd-2.gif" alt="VQVLT DVD button VQVLT DVD spinning icon">
+          <h3 class="home-options-text home-options-text-black">GAME</h3>
+        </button>
+      </div>
+    </div>
+    <div class="home-section-button-mobile">
+      <div class="home-section-button-row-mobile">
+        <button id="contact-button" class="home-options-wrapper contact-button" onclick="newPage('contact'); return false;">
+          <img class="home-options-icon" src="./home_files/vault.gif" alt="About button Spinning pager icon">
+          <h3 class="home-options-text home-options-text-green">CONTACT</h3>
+        </button>
+      </div>
+      <div class="home-section-button-row-mobile">
+        <button id="forums-button" class="home-options-wrapper forums-button" onclick="window.open('https://t.me/vqvlt', '_blank')">
+          <img class="home-options-icon" src="./home_files/vqvltForum.gif" alt="Forum button Profile spinning icon">
+          <h3 class="home-options-text home-options-text-forum">TELEGRAM</h3>
+        </button>
+      </div>
+      <div class="home-section-button-row-mobile">
+        <button id="about-button" class="home-options-wrapper about-button" onclick="newPage('about'); return false;">
+          <img class="home-options-icon" src="./home_files/about.gif" alt="About button Spinning mystery box icon">
+          <h3 class="home-options-text home-options-text-red">ABOUT</h3>
+        </button>
+      </div>
+    </div>
+    <div class="home-section-copyright-mobile">
+      <h4 class="vqvlt-copyright-text" style="text-align: center;">
+        ©&nbsp;&nbsp;2026&nbsp;&nbsp;VQVLT <br>
+        <span class="vqvlt-tc vqvlt-terms"><button onclick="newPage('terms'); return false;">Terms and Conditions</button></span>
+        <br>
+        <span class="vqvlt-tc vqvlt-privacy"><button>Privacy Policy</button></span>
+      </h4>
+    </div>
+  </div>
+</div>
+
+<img src="./home_files/seg" width="1" height="1">
+
+<script language="JavaScript1.1" async="" src="./home_files/js(1)"></script>
+<script>
+function newPage(page) {
+  const pageMap = {
+    home: 'home.html',
+    contact: 'contact.html',
+    about: 'about.html',
+    game: './game/game.html',
+    vault: 'vault.html',
+    media: 'media.html',
+    lost: 'lost.html',
+    chug: 'chug.html',
+    terms: 'terms.html',
+    // add more mappings as needed
+  };
+  const url = pageMap[page] || (page + '.html');
+  fetch(url)
+    .then(response => response.text())
+    .then(html => {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = html;
+      const newContent = tempDiv.querySelector('#vqvlt-content');
+      if (newContent) {
+        const currentContent = document.querySelector('#vqvlt-content');
+        currentContent.replaceWith(newContent);
+        const newUrl = '/' + page;
+        history.pushState({page: page}, '', newUrl);
+        if (page === 'vault') {
+          attachVaultLoginLogic();
+        }
+      }
+    });
+}
+window.addEventListener('popstate', function(event) {
+  if (event.state && event.state.page) {
+    newPage(event.state.page);
+  }
+});
+function attachVaultLoginLogic() {
+  var pwInput = document.getElementById('vault-password');
+  var loginBtn = document.querySelector('#login-section button');
+  if (!pwInput || !loginBtn) return;
+  function checkVaultPassword() {
+    var pw = pwInput.value;
+    if (pw === 'vqvlt') {
+      document.getElementById('login-section').style.display = 'none';
+      document.getElementById('vault-content').style.display = 'block';
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+    }
+  }
+  loginBtn.onclick = checkVaultPassword;
+  pwInput.onkeydown = function(e) {
+    if (e.key === 'Enter') checkVaultPassword();
+  };
+}
+// Attach on initial load if on vault page
+if (window.location.pathname.replace(/^\//, '').replace(/\.html$/, '') === 'vault') {
+  attachVaultLoginLogic();
+}
+</script>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>VQVLT</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <meta name="description" content="VQVLT">
+    <meta name="keywords" content="VQVLT">
+    <meta name="author" content="VQVLT">
+    <link rel="shortcut icon" type="image/png" href="vqvlt2.png">
+    <meta name="google-site-verification" content="UPXlhM6TpbXIphqwLtIpuMkTm1qxSFiXxZ1P1zoHn5k">
+    <link rel="stylesheet" href="./root_files/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="./root_files/video-js.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./global/main.min.css">
+    <script src="./root_files/jquery.min.js"></script>
+    <script src="./root_files/index.umd.min.js"></script>
+    <script src="./root_files/three.min.js"></script>
+    <script src="./root_files/definitions.min.js"></script>
+    <script src="./root_files/assets.min.js"></script>
+    <script src="./root_files/main.min.js"></script>
+</head>
+<body>
+    <div id="vqvlt-tube-border" class="vqvlt-tube-border vqvlt-tube-border-mobile"></div>
+    <div class="vqvlt-tube-shape">
+      <div id="vqvlt-content" class="vqvlt-content" style="animation: 3.4s linear 0s 1 normal none running turn-on;"><div class="landing-content">
+  <div id="landing-title" class="landing-title">
+    <img src="./root_files/vq-hitone.png" class="landing-image" alt="VQVLT logo">
+  </div>
+  <div class="landing-start">
+    <div class="landing-start-container">
+      <h2 id="landing-start-button" class="landing-start-text">
+        <span class="landing-start-arrow">›</span>
+        <button style="cursor:pointer;" onclick="newPage('home'); return false;">PRESS START</button>
+      </h2>
+    </div>
+  </div>
+  <div class="landing-copyright">
+    <div class="landing-copyright-container">
+      <h2 class="landing-copyright-text">
+        ©&nbsp;&nbsp;2026&nbsp;&nbsp;VQVLT
+      </h2>
+    </div>
+  </div>
+</body>
+<script>
+function newPage(page) {
+  const pageMap = {
+    home: 'home.html',
+    contact: 'contact.html',
+    about: 'about.html',
+    tools: 'tools.html',
+    vault: 'vault.html',
+    media: 'media.html',
+    lost: 'lost.html',
+    chug: 'chug.html',
+    terms: 'terms.html',
+    // add more mappings as needed
+  };
+  const url = pageMap[page] || (page + '.html');
+  fetch(url)
+    .then(response => response.text())
+    .then(html => {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = html;
+      const newContent = tempDiv.querySelector('#vqvlt-content');
+      if (newContent) {
+        const currentContent = document.querySelector('#vqvlt-content');
+        currentContent.replaceWith(newContent);
+        const newUrl = '/' + page;
+        history.pushState({page: page}, '', newUrl);
+      }
+    });
+}
+window.addEventListener('popstate', function(event) {
+  if (event.state && event.state.page) {
+    newPage(event.state.page);
+  }
+});
+</script>
+</html>

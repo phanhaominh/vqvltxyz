@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<link rel="stylesheet" type="text/css" href="banner-styles.css" />
+<link rel="stylesheet" type="text/css" href="iconochive.css" />
+<link rel="icon" type="image/png" href="vqvlt2.png">
+<link rel="stylesheet" href="../shared_assets/css/all.css">
+<link rel="stylesheet" type="text/css" href="main.min.css">
+
+
+    <meta name="mbcom:id" content="567335">
+          <meta charset="utf-8">
+      <title>VQVLT</title>
+      <meta name="keywords" content="" lang="de">
+      <meta name="description" content="VQVLT" lang="de">
+      <meta name="author" content="VQVLT">
+      <meta name="publisher" content="VQVLT">
+      <meta name="copyright" content="VQVLT">
+      <meta name="robots" content="index, follow">
+  
+      <meta name="gsa-index" content="index">
+      <meta name="gsa-title" content="Retro Game">
+      <meta name="gsa-description" content="">
+      <meta name="gsa-filetype" content="html">
+      <meta name="gsa-date" content="19.04.2018">
+      <meta name="gsa-relevance" content="None">
+      <meta name="gsa-type" content="post">
+      <meta name="gsa-ressort" content="DTM">
+  
+      <meta name="og:title" content="Retro Game">
+      <meta name="og:description" content="Retro Game">
+      <meta name="og:type" content="article">
+      <meta name="og:image" content="/web/20220411203852im_/https://vqvlt.xyz/">
+      <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+      <meta content="no-store, no-cache, must-revalidate" http-equiv="cache-control">
+      <meta content="pre-check=0, post-check=0, max-age=0" http-equiv="cache-control">
+      <meta content="Sat, 1 Jan 2000 00:00:00 GMT" http-equiv="expires">
+      <meta content="no-cache" http-equiv="pragma">
+      <meta name="viewport" content="width=device-width">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+      <meta name="apple-touch-fullscreen" content="yes">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="format-detection" content="telephone=no">
+      <meta name="HandheldFriendly" content="true">
+      <meta name="twitter:card" content="summary">
+      <meta name="twitter:site" content="VQVLT">
+      <meta name="twitter:creator" content="VQVLT">
+      <meta name="twitter:title" content="Retro Game">
+      <meta name="twitter:description" content="Retro Game">
+      <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+      <meta http-equiv="imagetoolbar" content="no">
+      <meta name="msapplication-tap-highlight" content="no">
+  
+  
+  
+<noscript><style type="text/css"> .wpb_animate_when_almost_visible { opacity: 1; }</style></noscript>
+  
+  
+  
+  
+  
+  
+      <script src="js/jquery-1.11.1.min.js" integrity="" crossorigin="anonymous"></script>
+  
+  
+  
+  
+  
+  
+  
+    </head>
+    <style>
+@font-face {
+  font-family: 'Press Start 2P';
+  src: url('PressStart2P-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+#nitrous-indicator {
+  font-family: 'Press Start 2P', 'PressStart2P-Regular', monospace !important;
+}
+#modal-header {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  width: 220px;
+  height: auto;
+  margin: 0;
+  display: block;
+}
+@media (max-width: 700px) {
+  #modal-header {
+    position: static;
+    display: block;
+    margin: 32px auto 0 auto;
+    left: unset;
+    top: unset;
+    width: 60vw;
+    max-width: 90vw;
+  }
+}
+</style>
+    <body>
+  <div id="vqvlt-tube-border" class="vqvlt-tube-border"></div>
+  <div class="vqvlt-tube-shape">
+    <div id="vqvlt-content" class="vqvlt-content" style="animation: 3.4s linear 0s 1 normal none running turn-on;">
+    <div id="StayFocusd-infobar" style="display:none;">
+      <span id="StayFocusd-infobar-msg"></span>
+      <span id="StayFocusd-infobar-links">
+          <a id="StayFocusd-infobar-never-show">hide forever</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+          <a id="StayFocusd-infobar-hide">hide once</a>
+      </span>
+    </div>
+    <div id="mbc-preloader" class="mbc-preloader">
+        <div id="mbc-preloader-img" class="mbc-preloader-img"></div>
+    </div>
+    <a name="top" data-name="/top/"></a>
+    <div id="page-container" class="amgdtm-main-page">
+        <div id="page-content">
+    <div class="main-page">
+            <section class="amgdtm-retrogame">
+             <div id="racer" style="width: 1295px; height: 1064px; transform: translate(0px, 0px);">
+               <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #1f1f1f; z-index: 9999;" id="preload">
+            <div class="pixel dance text-center" style="position: absolute; top: 50%; left: 0; right: 0; transform: translate(0, -50%);">
+                 <span class="no-wrap"><span>L</span><span>O</span><span>A</span><span>D</span><span>I</span><span>N</span><span>G</span></span>
+            </div>
+          </div>
+          <div id="hud" class="hud pixel hideHud">
+            <div class="hud-bar">
+              <div class="hud-left">
+                <div>km/h</div>
+                <div id="speed_value" class="value">0</div>/<span id="max_speed">160</span>
+              </div>
+              <div class="hud-center">
+                <div>Stars Left:</div>
+                <div id="stars_left" class="value">10</div>
+              </div>
+              <div class="hud-right">
+                <div>Level</div>
+                <div id="lap_value" class="value">1</div>/3
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div id="current_lap_time" class="hud-center">
+              <div class="highlight value" id="current_lap_time_highlight">10</div>
+              <span id="current_lap_time_value" class="value">0</span>
+            </div>
+            <div id="touch-input" class="pixel">
+              <div class="touch-control view" data-control="L">
+                <div class="circle">LEFT</div>
+              </div>
+              <div class="touch-control view" data-control="U">
+                <div class="circle">CENTER</div>
+              </div>
+              <div class="touch-control view" data-control="R">
+                <div class="circle">RIGHT</div>
+              </div>
+              <div id="nitrowrapper" class="touch-control view" data-control="N">
+                <div id="nitrobutton" class="circle">NITRO</div>
+              </div>
+            </div>
+            <div class="hud-center">
+              <img src="images/radio_panel.png" style="margin-top: 12px;" usemap="#image-map">
+              <map name="image-map">
+                <area coords="225,21,14" shape="circle" onclick="Game.playNextSong();">
+                <area coords="75,21,13" shape="circle" onclick="Game.playLastSong();">
+                <area coords="113,22,15" shape="circle" onclick="Game.playMusic();">
+                <area coords="150,20,14" shape="circle" onclick="Game.pauseMusic();">
+                <area coords="187,21,14" shape="circle" onclick="Game.stopMusic();">
+              </map>
+            </div>
+            <div id="ampel"><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div></div>
+            </div>
+            <div id="nitrous-indicator" style="
+      position: absolute;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10000;
+      background: rgba(0, 173, 239, 0.85);
+      color: #fff;
+      font-size: 2em;
+      font-family: 'Press Start 2P', monospace;
+      padding: 16px 32px;
+      border-radius: 12px;
+      box-shadow: 0 0 16px #00adef;
+      display: none;
+      letter-spacing: 0.1em;
+      text-align: center;
+    ">NITROUS!</div>
+    <div id="brake-indicator" style="
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10000;
+      background: rgba(220, 0, 0, 0.85);
+      color: #fff;
+      font-size: 2em;
+      font-family: 'Press Start 2P', monospace;
+      padding: 16px 32px;
+      border-radius: 12px;
+      box-shadow: 0 0 16px #c00;
+      display: none;
+      letter-spacing: 0.1em;
+      text-align: center;
+    ">BRAKE!</div>
+            <canvas id="canvas" width="1295px" height="1064px" style="width: 1295px; height: 1064px;">
+            Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
+            </canvas>
+            <div id="menu" style="background: url('images/modalback.png'); background-size:cover;background-repeat: no-repeat;">
+              <div class="content">
+                 <div class="pixel dance text-center">
+                  <span class="no-wrap"><span class="big">Y</span><span class="big">O</span><span class="big">U</span></span><span class="big hidden-xs">&nbsp;</span><span class="no-wrap"><span class="big">M</span><span class="big">A</span><span class="big">D</span><span class="big">E</span></span><span class="big hidden-xs">&nbsp;</span><span class="no-wrap"><span class="big">I</span><span class="big">T</span></span>
+                </div>
+                <div id="table_wrap">
+                  <table width="95%" id="leaderboard"></table>
+                </div>
+                <div class="score-content pixel">
+                  <span id="total_score" class="hidden">
+                    Time:
+                  <span id="total_score_value">0</span>
+                  
+                  <div>
+                    <form id="user_form">
+                      <input id="username_field" type="text" placeholder="Enter Username" name="Username" required="">
+                      <button type="submit">Submit</button>
+                    </form>
+                  </div>
+                </span>
+                  <div class="text-center">
+                  <button type="button" class="button small primary" style="width: auto; display: inline-block;" onclick="racr.replay()">Play again</button>
+                </div><br>
+                </div>
+                <br>
+                <div class="text-center pixel">
+                  <span id="total_name"></span><br>
+                  <span id="total_email"></span>
+                </div>
+              </div>
+            </div>
+            <div class="modal" id="retrogame-modal">
+            
+      
+                <img id="modal-header" src="images/rallyrace1.png">
+                <img id="mercedes-logo" src="">
+      
+                <div id="retrogame-start-wrapper">
+                  <button type="button" id="retrogame-start" class="button small primary pixel" onclick="racr.startClick()">Start</button>
+                </div>
+      
+          <img id="rocky-image" src="images/asaprockycartoon2final.png">
+        </div>
+            </div></section>
+            <style>
+                @import url('style_v1.css');
+            </style>
+            <script type="text/javascript" src="js/gsap.min.js"></script>
+            <script type="text/javascript" src="js/anime.min.js"></script>
+            <script type="text/javascript" src="js/howler.min.js"></script>
+            <script type="text/javascript" src="js/amg.js"></script></div>
+        </div>
+    
+    </div>
+    
+    <div id="fallback-container">
+        <noscript>
+            <div id="fallback-no-js" class="fallback row">
+                <div class="inner col span_full">
+                    <div class="error-message">
+                        <h3 class="headline">
+                            Sorry, it seems to be that your JavaScript is deactivated!
+                        </h3>
+                        <p class="subline">
+                            Please activate JavaScript within your browser settings.
+                        </p>
+                        <p class="button-holder">
+                            <a href="https://web.archive.org/web/20220411203852/http://www.activatejavascript.org/" target="_blank" class="text-button">activatejavascript.org<i></i></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </noscript>
+    </div>
+  </div>
+  
+  <script>
+function newPage(page) {
+  const pageMap = {
+    home: 'home.html',
+    contact: 'contact.html',
+    about: 'about.html',
+    game: './game/game.html',
+    vault: 'vault.html',
+    media: 'media.html',
+    lost: 'lost.html',
+    chug: 'chug.html',
+    terms: 'terms.html',
+    // add more mappings as needed
+  };
+  const url = pageMap[page] || (page + '.html');
+  fetch(url)
+    .then(response => response.text())
+    .then(html => {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = html;
+      const newContent = tempDiv.querySelector('#vqvlt-content');
+      if (newContent) {
+        const currentContent = document.querySelector('#vqvlt-content');
+        currentContent.replaceWith(newContent);
+        const newUrl = '/' + page;
+        history.pushState({page: page}, '', newUrl);
+        if (page === 'vault') {
+          attachVaultLoginLogic();
+        }
+      }
+    });
+}
+window.addEventListener('popstate', function(event) {
+  if (event.state && event.state.page) {
+    newPage(event.state.page);
+  }
+});
+</script>
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+  var slider = document.getElementById('fov-slider');
+  var valueLabel = document.getElementById('fov-value');
+  if (!slider || !valueLabel) return; // Exit if slider is not found
+  // Set initial value from game params if available
+  if (window.racr && racr.params && racr.params.fieldOfView) {
+    slider.value = racr.params.fieldOfView;
+  }
+  valueLabel.textContent = slider.value;
+
+  slider.addEventListener('input', function() {
+    valueLabel.textContent = slider.value;
+    if (window.racr && racr.params) {
+      racr.params.fieldOfView = parseInt(slider.value, 10);
+      // Recalculate cameraDepth and reset the game view
+      racr.params.cameraDepth = 1 / Math.tan((racr.params.fieldOfView / 2) * Math.PI / 180);
+      if (typeof racr.reset === 'function') {
+        racr.reset();
+      }
+    }
+  });
+});
+</script>
+  <!-- NOS Button for Mobile View -->
+<style>
+@media (max-width: 700px) {
+  #nos-mobile-btn {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    z-index: 10020;
+    background: #00adef;
+    color: #fff;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 16px;
+    padding: 18px 32px;
+    box-shadow: 0 4px 16px #0008;
+    cursor: pointer;
+    opacity: 0.95;
+    transition: background 0.2s, opacity 0.2s;
+  }
+  #nos-mobile-btn:active {
+    background: #007fa3;
+    opacity: 1;
+  }
+}
+@media (min-width: 701px) {
+  #nos-mobile-btn { display: none !important; }
+}
+</style>
+<button id="nos-mobile-btn" onclick="if(window.racr && racr.activateNitrous) racr.activateNitrous();">NOS</button>
+  </body>
+
+</html>

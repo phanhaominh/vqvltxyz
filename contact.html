@@ -1,0 +1,164 @@
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    
+    <script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script><script async="" src="./contact_files/gtm.js.download"></script><script async="" src="./contact_files/js"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "UA-50920100-11");
+    </script>
+    <title>VQVLT</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <meta name="description" content="VQVLT">
+    <meta name="keywords" content="VQVLT">
+    <meta name="author" content="VQVLT">
+    <link rel="shortcut icon" type="image/png" href="vqvlt2.png">
+    <meta name="google-site-verification" content="UPXlhM6TpbXIphqwLtIpuMkTm1qxSFiXxZ1P1zoHn5k">
+    <link rel="stylesheet" href="./contact_files/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="./contact_files/video-js.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./global/main.min.css">
+    <script src="./contact_files/jquery.min.js.download"></script>
+    <script src="./contact_files/index.umd.min.js.download"></script>
+    <script src="./contact_files/three.min.js.download"></script>
+    <script async="" type="text/javascript" src="./contact_files/klaviyo.js.download"></script>
+    <!-- vqvlt Scripts -->
+    <script src="./contact_files/definitions.min.js.download"></script>
+    <script src="./contact_files/assets.min.js.download"></script>
+    <script src="./contact_files/main.min.js.download"></script>
+    <!-- End vqvlt Scripts -->
+  <body>
+    <div id="vqvlt-tube-border" class="vqvlt-tube-border"></div>
+    <div class="vqvlt-tube-shape">
+      <div id="vqvlt-content" class="vqvlt-content" style="animation: 3.4s linear 0s 1 normal none running turn-on;"><button id="vqvlt-home" class="vqvlt-home" onclick="newPage('home'); return false;">
+  <img src="./contact_files/vqvlt-home.gif" alt="Home button spinning globe">
+</button>
+<div class="contact-content">
+  <div class="vqvlt-stars"></div>
+  <div class="home-navbar home-navbar-mobile">
+    <button onclick="newPage('home'); return false;">
+      <img src="./contact_files/vq-hitone.png" alt="Home button vqvlt logo">
+    </button>
+  </div>
+  <div class="contact-container">
+    <div class="contact-navbar-decoration">
+      <svg class="contact-navbar-svg">
+        <line class="contact-navbar-line" x1="0" y1="0" x2="100%" y2="0"></line>
+        <line class="contact-navbar-line" x1="0" y1="33%" x2="100%" y2="33%"></line>
+        <line class="contact-navbar-line" x1="0" y1="66%" x2="100%" y2="66%"></line>
+        <line class="contact-navbar-line" x1="0" y1="100%" x2="100%" y2="100%"></line>
+        <rect class="contact-navbar-square-outer" height="100%" width="30px" x="4%"></rect>
+        <rect class="contact-navbar-square-inner" height="100%" width="30px" x="4%"></rect>
+      </svg>
+    </div>
+    <div class="contact-navbar">
+      <h1 class="contact-navbar-text">
+        <span class="contact-navbar-text-extra">CONTACT</span>
+      </h1>
+    </div>
+    <div class="contact-contact">
+      <div class="contact-email-container">
+        <div class="contact-contact-label-container">
+          <div class="contact-contact-label">
+            <h1 class="contact-contact-label-text">EMAIL</h1>
+          </div>
+        </div>
+        <div class="contact-contact-input-container">
+          <textarea class="contact-contact-textarea contact-contact-textarea-mobile rainbow-text" placeholder="Email" id="contact-email" style="overflow: hidden; overflow-wrap: break-word; height: 57px;"></textarea>
+        </div>
+      </div>
+      <div class="contact-subject-container">
+        <div class="contact-contact-label-container">
+          <div class="contact-contact-label">
+            <h1 class="contact-contact-label-text">SUBJECT</h1>
+          </div>
+        </div>
+        <div class="contact-contact-input-container">
+          <textarea class="contact-contact-textarea contact-contact-textarea-mobile rainbow-text" placeholder="Subject" id="contact-subject" style="overflow: hidden; overflow-wrap: break-word; height: 57px;"></textarea>
+        </div>
+      </div>
+      <div class="contact-message-container">
+        <div class="contact-contact-label-container">
+          <div class="contact-contact-label">
+            <h1 class="contact-contact-label-text">MESSAGE</h1>
+          </div>
+        </div>
+        <div class="contact-contact-textarea-container">
+          <textarea class="contact-contact-textarea contact-contact-textarea-mobile rainbow-text" placeholder="Message" id="contact-message" style="overflow: hidden; overflow-wrap: break-word; height: 158px;"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="contact-footer">  
+      <button class="contact-footer-text" id="contact-send-vqvlt">
+        SEND TO<br>VQVLT
+      </button>
+      <button class="contact-footer-text" id="contact-send-order-support" onclick="window.open('https://t.me/vqvlt', '_blank')">
+        CONTACT VIA<br>TELEGRAM
+      </button>
+    </div>
+  </div>
+</div>
+<script>
+function newPage(page) {
+  const pageMap = {
+    home: 'home.html',
+    contact: 'contact.html',
+    about: 'about.html',
+    tools: 'tools.html',
+    vault: 'vault.html',
+    media: 'media.html',
+    lost: 'lost.html',
+    chug: 'chug.html',
+    terms: 'terms.html',
+    // add more mappings as needed
+  };
+  const url = pageMap[page] || (page + '.html');
+  fetch(url)
+    .then(response => response.text())
+    .then(html => {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = html;
+      const newContent = tempDiv.querySelector('#vqvlt-content');
+      if (newContent) {
+        const currentContent = document.querySelector('#vqvlt-content');
+        currentContent.replaceWith(newContent);
+        const newUrl = '/' + page;
+        history.pushState({page: page}, '', newUrl);
+        if (page === 'vault') {
+          attachVaultLoginLogic();
+        }
+      }
+    });
+}
+window.addEventListener('popstate', function(event) {
+  if (event.state && event.state.page) {
+    newPage(event.state.page);
+  }
+});
+function attachVaultLoginLogic() {
+  var pwInput = document.getElementById('vault-password');
+  var loginBtn = document.querySelector('#login-section button');
+  if (!pwInput || !loginBtn) return;
+  function checkVaultPassword() {
+    var pw = pwInput.value;
+    if (pw === 'vqvlt') {
+      document.getElementById('login-section').style.display = 'none';
+      document.getElementById('vault-content').style.display = 'block';
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+    }
+  }
+  loginBtn.onclick = checkVaultPassword;
+  pwInput.onkeydown = function(e) {
+    if (e.key === 'Enter') checkVaultPassword();
+  };
+}
+// Attach on initial load if on vault page
+if (window.location.pathname.replace(/^\//, '').replace(/\.html$/, '') === 'vault') {
+  attachVaultLoginLogic();
+}
+</script>
+
